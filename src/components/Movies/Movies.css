@@ -1,0 +1,41 @@
+.movies-explorer {
+    display: flex;
+    flex-direction: column;
+    margin: 70px 70px 10px;
+    max-width: calc(100% - 140px);
+}
+
+@media screen and (max-width: 768px) {
+    .movies-explorer {
+        margin: 70px 30px 10px;
+        max-width: calc(100% - 20px);
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .movies-explorer {
+        margin: 70px 14px 10px;
+        max-width: calc(100% - 20px);
+    }
+}
+
+.more-click {
+    display: flex;
+    justify-content: center;
+    margin: 50px 0 0;
+}
+
+.more-click__button {
+    background-color: #f9f9f9;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: Inter,Arial,Helvetica,sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 15px;
+    margin: 0 0 71px;
+    padding: 11px 0 9px;
+    width: 320px;
+}
