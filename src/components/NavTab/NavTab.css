@@ -9,6 +9,10 @@
     }
 }
 
+.navTab__button:hover {
+    opacity: 80%;
+}
+
 .navTab__button {
     border: 1px solid #fff;
     border-radius: 3px;

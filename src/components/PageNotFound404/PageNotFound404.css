@@ -17,6 +17,10 @@
     }
 }
 
+.notFound__link:hover {
+    opacity: 80%;
+}
+
 .notFound__link {
     font-family: Inter,Arial,Helvetica,sans-serif;
     font-size: 14px;

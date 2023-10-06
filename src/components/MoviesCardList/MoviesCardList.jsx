@@ -1,18 +1,17 @@
-import React, {Children} from 'react';
+import React from 'react';
 import MoviesCard from "../MoviesCard";
 import './MoviesCardList.css';
 
-const MoviesCardList = () => {
+const MoviesCardList = ({isLike}) => {
     return (
         <section className="movies">
-            <MoviesCard/>
-            <MoviesCard/>
-            <MoviesCard/>
-            <MoviesCard/>
-            <MoviesCard/>
-            <MoviesCard/>
-            <MoviesCard/>
-            <MoviesCard/>
+            <MoviesCard isLike={isLike}/>
+            <MoviesCard isLike={isLike}/>
+            <MoviesCard isLike={isLike}/>
+            <MoviesCard isLike={isLike}/>
+            <MoviesCard isLike={isLike}/>
+            <MoviesCard isLike={isLike}/>
+            <MoviesCard isLike={isLike}/>
         </section>
     );
 };

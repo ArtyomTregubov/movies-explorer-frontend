@@ -25,6 +25,10 @@
     margin: 50px 0 0;
 }
 
+.more-click__button:hover {
+    opacity: 80%;
+}
+
 .more-click__button {
     background-color: #f9f9f9;
     border: none;

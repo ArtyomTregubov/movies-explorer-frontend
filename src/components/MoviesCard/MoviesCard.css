@@ -96,6 +96,10 @@
     }
 }
 
+.movie__like-button:hover {
+    opacity: 80%;
+}
+
 .movie__like-button {
     background-color: initial;
     border: none;
@@ -125,6 +129,10 @@
         font-size: 12px;
         line-height: 15px;
     }
+}
+
+.movie__trailer-link:hover {
+    opacity: 80%;
 }
 
 .movie__trailer-link {

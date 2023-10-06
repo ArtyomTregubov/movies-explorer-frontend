@@ -12,8 +12,24 @@ import PageNotFound404 from "../PageNotFound404";
 import Movies from "../Movies";
 import SavedMovies from "../SavedMovies";
 import Profile from "../Profile";
+import BurgerMenu from "../BurgerMenu";
 
 function App() {
+
+  const [isBurgerOpen, setBurgerOpen] = React.useState(false);
+  const [isSwitched, setSwitched] = React.useState(false);
+  function handleSwitch(e){
+      e.preventDefault();
+      setSwitched(!isSwitched);
+  }
+
+    function handleBurgerClick() {
+    setBurgerOpen(true);
+  }
+
+  function handleClose() {
+    setBurgerOpen(false);
+  }
 
   return (
       <div className="page">
@@ -22,7 +38,10 @@ function App() {
             path="/"
             element={
               <>
-                <Header loggedIn={false}/>
+                <Header
+                    loggedIn={false}
+                    onBurgerClick={handleBurgerClick}
+                />
                 <Main/>
                 <Footer />
               </>
@@ -32,8 +51,10 @@ function App() {
             path="/movies"
             element={
               <>
-                <Header />
-                <Movies/>
+                <Header
+                    onBurgerClick={handleBurgerClick}
+                />
+                <Movies />
                 <Footer />
               </>
             }
@@ -42,8 +63,10 @@ function App() {
             path="/saved-movies"
             element={
               <>
-                <Header />
-                <SavedMovies/>
+                <Header
+                    onBurgerClick={handleBurgerClick}
+                />
+                <SavedMovies />
                 <Footer />
               </>
             }
@@ -52,9 +75,10 @@ function App() {
             path="/profile"
             element={
               <>
-                <Header />
-                <Profile/>
-                <Footer />
+                <Header
+                    onBurgerClick={handleBurgerClick}
+                />
+                <Profile isSwitched={isSwitched} handleSwitch={handleSwitch}/>
               </>
             }
           />
@@ -78,6 +102,10 @@ function App() {
                 <PageNotFound404/>
             } />
         </Routes>
+        <BurgerMenu
+            isOpen={isBurgerOpen}
+            onClose={handleClose}
+        />
       </div>
   );
 }

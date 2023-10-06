@@ -26,6 +26,10 @@
     }
 }
 
+.search-form__button:hover {
+    opacity: 80%;
+}
+
 .search-form__button {
     font-family: Inter,Arial,Helvetica,sans-serif;
     align-self: center;

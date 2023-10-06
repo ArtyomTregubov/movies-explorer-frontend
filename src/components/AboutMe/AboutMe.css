@@ -125,6 +125,10 @@
     }
 }
 
+.aboutMe__link:hover {
+    opacity: 80%;
+}
+
 .aboutMe__link {
     font-family: Inter,Arial,Helvetica,sans-serif;
     font-size: 14px;
@@ -174,13 +178,14 @@
     font-family: Inter,Arial,Helvetica,sans-serif;
     font-size: 14px;
     font-style: normal;
+
 }
 
 @media screen and (max-width: 900px) {
     .aboutMe__text {
         font-size: 12px;
         line-height: 18px;
-        margin: 20px 0 0;
+        margin: 20px 20px 0 0;
     }
 }
 

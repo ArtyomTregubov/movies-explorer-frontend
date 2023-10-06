@@ -50,6 +50,10 @@
     }
 }
 
+.footer__link:hover {
+    opacity: 80%;
+}
+
 .footer__link {
     font-family: Inter,Arial,Helvetica,sans-serif;
     font-size: 13px;
@@ -70,9 +74,17 @@
     }
 }
 
+.footer__link-text:hover {
+    opacity: 80%;
+}
+
 .footer__link-text {
     color: #000;
     text-decoration: none;
+}
+
+.footer__links:hover {
+    opacity: 80%;
 }
 
 .footer__links {

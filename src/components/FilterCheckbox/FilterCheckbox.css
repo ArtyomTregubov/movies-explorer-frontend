@@ -37,7 +37,7 @@
     box-sizing: border-box;
     height: 20px;
     position: relative;
-    transition: background-color .3s ease-in;
+    transition: background-color .1s ease-in;
     width: 36px;
 }
 
@@ -47,13 +47,27 @@
     border-radius: 50%;
     box-sizing: border-box;
     content: "";
-    height: 40%;
+    height: 70%;
     left: 10px;
     position: absolute;
     top: 50%;
+}
+
+
+.checkbox__custom-checkbox--off {
+    background-color: #EBEBEB;
+}
+
+.checkbox__custom-checkbox--on::after {
+    transition: transform .1s ease-in;
+    -webkit-transform: translate(50%,-50%);
+    transform: translate(50%,-50%);
+}
+
+.checkbox__custom-checkbox--off::after {
+    transition: transform .1s ease-in;
     -webkit-transform: translate(-50%,-50%);
     transform: translate(-50%,-50%);
-    transition: left .3s ease-in;
 }
 
 .checkbox__label {
@@ -62,6 +76,7 @@
     font-style: normal;
     font-weight: 400;
     line-height: 1.64;
+    user-select: none;
 }
 
 @media (min-width: 768px) {

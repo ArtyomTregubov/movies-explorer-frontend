@@ -1,6 +1,6 @@
 import React from 'react';
 import SearchForm from "../SearchForm";
-import Preloader from "../Preloader";
+// import Preloader from "../Preloader";
 import MoviesCardList from "../MoviesCardList";
 
 import "./Movies.css"
@@ -8,7 +8,7 @@ import "./Movies.css"
 const Movies = () => {
     return (
         <div className="movies-explorer">
-            <SearchForm/>
+            <SearchForm />
             {/*<Preloader/>*/}
             <MoviesCardList/>
             <section className="more-click">

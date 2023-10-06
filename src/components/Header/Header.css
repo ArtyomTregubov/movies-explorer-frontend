@@ -7,6 +7,10 @@
     max-width: 100%;
 }
 
+.header__button:hover {
+    opacity: 80%;
+}
+
 .header__button {
     align-self: center;
     background-color: #2BE080;
@@ -52,6 +56,10 @@
     }
 }
 
+.header__link:hover {
+    opacity: 80%;
+}
+
 .header__link {
     color: #fff;
     cursor: pointer;
@@ -91,6 +99,10 @@
     .header__logo {
         padding: 18px 0 18px 14px;
     }
+}
+
+.header__logo-link:hover {
+    opacity: 80%;
 }
 
 .header__logo-link {
@@ -161,6 +173,10 @@
     }
 }
 
+.navigation__account-button:hover {
+    opacity: 80%;
+}
+
 .navigation__account-button {
     align-items: center;
     display: flex;
@@ -196,6 +212,10 @@
     padding-left: 1px;
 }
 
+.navigation__link:hover {
+    opacity: 80%;
+}
+
 .navigation__link {
     color: #000;
     cursor: pointer;
@@ -214,13 +234,22 @@
     }
 }
 
+.navigation__link-movies:hover {
+    opacity: 80%;
+}
+
 .navigation__link-movies {
     font-weight: 500;
     padding: 0 16px 0 0;
 }
 
+.navigation__links-account:hover {
+    opacity: 80%;
+}
+
 .navigation__links-account {
     display: flex;
-    background-color:#2BE080;
+    background-color:white;
     border-radius: 40px;
+    box-shadow: 0px 3px 14px 0px #00000014;
 }

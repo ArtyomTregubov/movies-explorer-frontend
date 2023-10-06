@@ -5,8 +5,8 @@ import SearchForm from "../SearchForm";
 const SavedMovies = () => {
     return (
         <main className="movies-explorer">
-            <SearchForm/>
-            <MoviesCardList/>
+            <SearchForm />
+            <MoviesCardList isLike={false}/>
         </main>
     );
 };

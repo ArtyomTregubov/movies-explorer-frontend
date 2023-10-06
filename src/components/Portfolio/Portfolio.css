@@ -57,6 +57,10 @@
     }
 }
 
+.portfolio__link:hover {
+    opacity: 80%;
+}
+
 .portfolio__link {
     border-bottom: 1px solid #e8e8e8;
     list-style-type: none;
