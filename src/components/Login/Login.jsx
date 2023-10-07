@@ -13,12 +13,12 @@ const Login = () => {
                     <fieldset className="register__inputs-block">
                         <label className="register__label">
                             <p className="register__placeholder">E-mail</p>
-                            <input className="register__input register__input-email" type="email" name="email" placeholder="ваша почта" required="" pattern="^[a-zA-Z0-9_.+\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-.]+$" value="pochta@yandex.ru"/>
+                            <input className="register__input register__input-email" type="email" name="email" placeholder="ваша почта" required pattern="^[a-zA-Z0-9_.+\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-.]+$" value="pochta@yandex.ru"/>
                             <span className="register__input-error " id="email-error"></span>
                         </label>
                         <label className="register__label">
-                            <p className="register__placeholder">Пароль</p>e
-                            <input className="register__input register__input-password" type="password" name="password" placeholder="" required="" value=""/>
+                            <p className="register__placeholder">Пароль</p>
+                            <input className="register__input register__input-password" type="password" name="password" placeholder="" required value=""/>
                             <span className="register__input-error " id="password-error"></span>
                         </label>
                     </fieldset>

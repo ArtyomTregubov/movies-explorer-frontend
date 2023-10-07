@@ -22,7 +22,7 @@
 }
 
 .notFound__link {
-    font-family: Inter,Arial,Helvetica,sans-serif;
+    font-family: 'Inter', 'Arial', sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -39,7 +39,7 @@
 }
 
 .notFound__message {
-    font-family: Inter,Arial,Helvetica,sans-serif;
+    font-family: 'Inter', 'Arial', sans-serif;
     font-size: 16px;
     font-style: normal;
     font-weight: 400;
@@ -57,7 +57,7 @@
 }
 
 .notFound__text {
-    font-family: Inter,Arial,Helvetica,sans-serif;
+    font-family: 'Inter', 'Arial', sans-serif;
     font-size: 140px;
     line-height: 170px;
     font-weight: 400;

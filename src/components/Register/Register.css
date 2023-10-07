@@ -21,7 +21,7 @@
     text-align: center;
     color: #ff3055;
     display: block;
-    font-family: Inter,Arial,Helvetica,sans-serif;
+    font-family: 'Inter', 'Arial', sans-serif;
     font-size: 10px;
     font-style: normal;
     font-weight: 400;
@@ -37,7 +37,7 @@
 }
 
 .register__input {
-    font-family: Inter,Arial,Helvetica,sans-serif;
+    font-family: 'Inter', 'Arial', sans-serif;
     font-style: normal;
     font-weight: 400;
     border: none;
@@ -50,7 +50,7 @@
 }
 
 .register__input-email {
-    border-bottom: 1px solid #3456F3;
+    border-bottom: 1px solid #E8E8E8;
     padding: 0 0 8px;
 }
 
@@ -68,7 +68,7 @@
     position: absolute;
     color: #FF3055;
     display: block;
-    font-family: Inter,Arial,Helvetica,sans-serif;
+    font-family: 'Inter', 'Arial', sans-serif;
     font-size: 10px;
     font-style: normal;
     font-weight: 400;
@@ -96,7 +96,7 @@
 .register__link {
     color: #3456F3;
     cursor: pointer;
-    font-family: Inter,Arial,Helvetica,sans-serif;
+    font-family: 'Inter', 'Arial', sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -163,7 +163,7 @@
 }
 
 .register__placeholder {
-    font-family: Inter,Arial,Helvetica,sans-serif;
+    font-family: 'Inter', 'Arial', sans-serif;
     font-style: normal;
     font-weight: 400;
     color: #a0a0a0;
@@ -203,7 +203,7 @@
     border-radius: 3px;
     color: #fff;
     cursor: pointer;
-    font-family: Inter,Arial,Helvetica,sans-serif;
+    font-family: 'Inter', 'Arial', sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 500;
@@ -231,7 +231,7 @@
 }
 
 .register__title {
-    font-family: Inter,Arial,Helvetica,sans-serif;
+    font-family: 'Inter', 'Arial', sans-serif;
     font-size: 24px;
     font-style: normal;
     font-weight: 500;

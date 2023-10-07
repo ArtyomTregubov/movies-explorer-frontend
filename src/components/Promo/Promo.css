@@ -2,7 +2,7 @@
     background-color: #073042;
     display: flex;
     justify-content: space-between;
-    padding: 75px 70px 84px;
+    padding: 92px 70px 84px;
 }
 
 @media screen and (max-width: 768px){
@@ -39,7 +39,7 @@
 }
 
 .promo__subtitle {
-    font-family: Inter,Arial,Helvetica,sans-serif;
+    font-family: 'Inter', 'Arial', sans-serif;
     font-style: normal;
     font-weight: 400;
     margin: 0;
@@ -76,7 +76,7 @@
     }
 }
 .promo__title {
-    font-family: Inter,Arial,Helvetica,sans-serif;
+    font-family: 'Inter', 'Arial', sans-serif;
     font-style: normal;
     font-weight: 400;
     font-size: 50px;

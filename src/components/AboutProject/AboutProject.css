@@ -50,7 +50,7 @@
 }
 
 .aboutProject__description-subtitle {
-    font-family: Inter,Arial,Helvetica,sans-serif;
+    font-family: 'Inter', 'Arial', sans-serif;
     font-size: 20px;
     font-style: normal;
     font-weight: 400;
@@ -74,7 +74,7 @@
 }
 
 .aboutProject__description-text {
-    font-family: Inter,Arial,Helvetica,sans-serif;
+    font-family: 'Inter', 'Arial', sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -115,7 +115,7 @@
 
 .aboutProject__subtitle {
     border-bottom: 1px solid #000;
-    font-family: Inter,Arial,Helvetica,sans-serif;
+    font-family: 'Inter', 'Arial', sans-serif;
     font-size: 22px;
     font-style: normal;
     font-weight: 400;
@@ -138,7 +138,7 @@
     color: #a0a0a0;
     font-weight: 500;
     padding: 14px 0 0;
-    font-family: Inter,Arial,Helvetica,sans-serif;
+    font-family: 'Inter', 'Arial', sans-serif;
     font-size: 14px;
     font-style: normal;
     line-height: 18px;
@@ -154,7 +154,7 @@
 }
 
 .aboutProject__timing {
-    font-family: Inter,Arial,Helvetica,sans-serif;
+    font-family: 'Inter', 'Arial', sans-serif;
     background-color: #2BE080;
     color: #000;
     line-height: 18px;
@@ -180,7 +180,7 @@
 }
 
 .aboutProject__timing-colored {
-    font-family: Inter,Arial,Helvetica,sans-serif;
+    font-family: 'Inter', 'Arial', sans-serif;
     font-size: 14px;
     font-style: normal;
     line-height: 18px;

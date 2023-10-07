@@ -24,7 +24,7 @@
 .profile__edit-button {
     border: none;
     cursor: pointer;
-    font-family: Inter,Arial,Helvetica,sans-serif;
+    font-family: 'Inter', 'Arial', sans-serif;
     font-size: 13px;
     font-style: normal;
     font-weight: 400;
@@ -74,7 +74,7 @@
 }
 
 .profile__input {
-    font-family: Inter,Arial,Helvetica,sans-serif;
+    font-family: 'Inter', 'Arial', sans-serif;
     font-size: 11px;
     font-style: normal;
     line-height: 13px;
@@ -108,7 +108,7 @@
 }
 
 .profile__placeholder {
-    font-family: Inter,Arial,Helvetica,sans-serif;
+    font-family: 'Inter', 'Arial', sans-serif;
     font-size: 11px;
     font-style: normal;
     line-height: 13px;
@@ -126,7 +126,7 @@
     border: none;
     color: #ff4062;
     cursor: pointer;
-    font-family: Inter,Arial,Helvetica,sans-serif;
+    font-family: 'Inter', 'Arial', sans-serif;
     font-size: 13px;
     font-style: normal;
     font-weight: 500;
@@ -147,7 +147,7 @@
 }
 
 .profile__title {
-    font-family: Inter,Arial,Helvetica,sans-serif;
+    font-family: 'Inter', 'Arial', sans-serif;
     font-size: 24px;
     font-style: normal;
     font-weight: 500;
@@ -188,7 +188,7 @@
     text-align: center;
     color: #ff3055;
     display: block;
-    font-family: Inter,Arial,Helvetica,sans-serif;
+    font-family: 'Inter', 'Arial', sans-serif;
     font-size: 10px;
     font-style: normal;
     font-weight: 400;
@@ -217,7 +217,7 @@
     text-align: center;
     color: #ff3055;
     display: block;
-    font-family: Inter,Arial,Helvetica,sans-serif;
+    font-family: 'Inter', 'Arial', sans-serif;
     font-size: 10px;
     font-style: normal;
     font-weight: 400;
@@ -235,7 +235,7 @@
     border-radius: 3px;
     color: #fff;
     cursor: pointer;
-    font-family: Inter,Arial,Helvetica,sans-serif;
+    font-family: 'Inter', 'Arial', sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 500;

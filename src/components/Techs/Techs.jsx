@@ -2,7 +2,7 @@ import React from 'react';
 import './Techs.css';
 const Techs = () => {
     return (
-        <section className="techs">
+        <section className="techs" name="techs" id="techs">
             <h2 className="techs__subtitle">Технологии</h2>
             <section className="techs__description">
                 <h3 className="techs__description-subtitle">7 технологий</h3>

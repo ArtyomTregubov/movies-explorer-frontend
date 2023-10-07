@@ -2,7 +2,7 @@
     display: flex;
     flex-direction: column;
     margin: 110px auto 0;
-    padding: 110px 72px;
+    padding: 100px 72px;
     max-width: calc(100% - 140px);
     background-color: #F5F5F5;;
 
@@ -28,7 +28,7 @@
 .techs__block {
     background-color: #e8e8e8;
     border-radius: 10px;
-    font-family: Inter,Arial,Helvetica,sans-serif;
+    font-family: 'Inter', 'Arial', sans-serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
@@ -93,7 +93,7 @@
 }
 
 .techs__description-subtitle {
-    font-family: Inter,Arial,Helvetica,sans-serif;
+    font-family: 'Inter', 'Arial', sans-serif;
     font-style: normal;
     font-weight: 400;
     letter-spacing: -.04em;
@@ -111,7 +111,7 @@
 }
 
 .techs__description-text {
-    font-family: Inter,Arial,Helvetica,sans-serif;
+    font-family: 'Inter', 'Arial', sans-serif;
     font-style: normal;
     font-weight: 400;
     letter-spacing: -.04em;
@@ -141,7 +141,7 @@
 
 .techs__subtitle {
     border-bottom: 1px solid #000;
-    font-family: Inter,Arial,Helvetica,sans-serif;
+    font-family: 'Inter', 'Arial', sans-serif;
     font-size: 22px;
     font-style: normal;
     font-weight: 400;

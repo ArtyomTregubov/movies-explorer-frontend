@@ -18,7 +18,7 @@
 }
 
 .footer__copyright {
-    font-family: Inter,Arial,Helvetica,sans-serif;
+    font-family: 'Inter', 'Arial', sans-serif;
     font-size: 13px;
     font-style: normal;
     font-weight: 400;
@@ -55,7 +55,7 @@
 }
 
 .footer__link {
-    font-family: Inter,Arial,Helvetica,sans-serif;
+    font-family: 'Inter', 'Arial', sans-serif;
     font-size: 13px;
     font-style: normal;
     font-weight: 400;
@@ -90,8 +90,7 @@
 .footer__links {
     display: flex;
     list-style-type: none;
-    margin: 0;
-    padding: 0;
+    margin: 0 -20px 0 0;
 }
 
 @media screen and (max-width: 550px) {
@@ -103,7 +102,7 @@
 
 .footer__subtitle {
     color: #a0a0a0;
-    font-family: Inter,Arial,Helvetica,sans-serif;
+    font-family: 'Inter', 'Arial', sans-serif;
     font-size: 13px;
     font-style: normal;
     font-weight: 400;

@@ -40,7 +40,7 @@
 }
 
 .aboutMe__description-subtitle {
-    font-family: Inter,Arial,Helvetica,sans-serif;
+    font-family: 'Inter', 'Arial', sans-serif;
     font-style: normal;
     font-size: 50px;
     font-weight: 400;
@@ -64,7 +64,7 @@
 }
 
 .aboutMe__description-text {
-    font-family: Inter,Arial,Helvetica,sans-serif;
+    font-family: 'Inter', 'Arial', sans-serif;
     font-style: normal;
     font-size: 18px;
     font-weight: 500;
@@ -130,14 +130,14 @@
 }
 
 .aboutMe__link {
-    font-family: Inter,Arial,Helvetica,sans-serif;
+    font-family: 'Inter', 'Arial', sans-serif;
     font-size: 14px;
     font-style: normal;
     color: #000;
     cursor: pointer;
     font-weight: 500;
     line-height: 17px;
-    margin: 33px 0 0;
+    margin: 62px 0 0;
     text-decoration: none;
     transition: opacity .35s linear;
 }
@@ -156,7 +156,7 @@
 
 .aboutMe__subtitle {
     border-bottom: 1px solid #000;
-    font-family: Inter,Arial,Helvetica,sans-serif;
+    font-family: 'Inter', 'Arial', sans-serif;
     font-size: 22px;
     font-style: normal;
     font-weight: 400;
@@ -175,10 +175,11 @@
 }
 
 .aboutMe__text {
-    font-family: Inter,Arial,Helvetica,sans-serif;
+    font-family: 'Inter', 'Arial', sans-serif;
     font-size: 14px;
     font-style: normal;
-
+    padding-top: 12px;
+    line-height: 22px;
 }
 
 @media screen and (max-width: 900px) {
