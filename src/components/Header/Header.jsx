@@ -4,7 +4,7 @@ import logo from "../../images/logo.svg";
 import logoAccount from "../../images/accountLogo.svg";
 const Header = ({ loggedIn = true, onBurgerClick } ) => {
     return (
-        (loggedIn ?
+        (loggedIn || Boolean(localStorage.getItem("token")) ?
         <header className="header_autorized">
                 <a className="header__logo-link" href="/">
                     <img className="header__logo" src={logo} alt="Логотип"/>
@@ -30,13 +30,13 @@ const Header = ({ loggedIn = true, onBurgerClick } ) => {
                 </div>
             </header>
                 :
-        <header class="header">
-            <a class="header__logo-link" href="/">
-                <img class="header__logo" src={logo} alt="Логотип"/>
+        <header className="header">
+            <a className="header__logo-link" href="/">
+                <img className="header__logo" src={logo} alt="Логотип"/>
             </a>
-            <div class="header__button-block">
-                <a class="header__link" href="/signup">Регистрация</a>
-                <a class="header__button" href="/signin">Войти</a>
+            <div className="header__button-block">
+                <a className="header__link" href="/signup">Регистрация</a>
+                <a className="header__button" href="/signin">Войти</a>
             </div>
         </header>
         )

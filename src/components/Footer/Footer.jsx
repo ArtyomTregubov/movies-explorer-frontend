@@ -12,7 +12,7 @@ const Footer = () => {
                         <a className="footer__link-text" href="https://practicum.yandex.ru" target="_blank" rel="noreferrer">Яндекс.Практикум</a>
                     </li>
                     <li className="footer__link">
-                        <a className="footer__link-text" href="#" target="_blank" rel="noreferrer">Github</a>
+                        <a className="footer__link-text" href="https://github.com/ArtyomTregubov" target="_blank" rel="noreferrer">Github</a>
                     </li>
                 </ul>
             </div>
