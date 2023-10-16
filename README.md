@@ -1,5 +1,7 @@
 # movies-explorer-frontend
-Макер: https://www.figma.com/file/6FMWkB94wE7KTkcCgUXtnC/Дипломный-проект?type=design&node-id=891-3857&mode=design&t=UpzMeMX8Mhz6Wxdo-0  
+Ссылка на пул реквест: https://github.com/ArtyomTregubov/movies-explorer-frontend/tree/level-3  
+Ссылка на фронтенд: film.tregubovart.nomoredomainsrocks.ru
+Ссылка на бекенд: api.film.tregubovart.nomoredomainsrocks.ru
 Проект: Фильмы  
 Проект представляет собой страницу где пользователи могут добавлять из списка фильмов фильмы в своё избранное  
   
