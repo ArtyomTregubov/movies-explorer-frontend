@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
 
 import './App.css'
@@ -19,94 +19,75 @@ import InfoTooltip from "../InfoTooltip";
 import ProtectedRouteElement from "../ProtectedRoute";
 
 function App() {
+  const [moviesShowed, setMoviesShowed] = useState([]);
+  const [isLoading, setLoading] = React.useState(false);
+  const [movies, setMovies] = React.useState([]);
+  const [favoriteMovies, setFavoriteMovies] = React.useState([]);
   const [loggedIn, setLoggedIn] = React.useState(false);
   const [isBurgerOpen, setBurgerOpen] = React.useState(false);
-  const [isSwitched, setSwitched] = React.useState(false);
   const [isInfoTooltipOpen, openInfoTooltip] = React.useState(false);
   const [currentUser, setCurrentUser] = React.useState({});
   const [isError, setErrorStatus] = React.useState(false);
-  const [isLoading, setLoading] = React.useState(false);
-  const [isShortMovies, setShortMovies] = React.useState(false);
-  const [promptText, setPrompt] = React.useState("");
-  const [movies, setMovies] = React.useState([]);
-  const [favoritMovies, setFavoritMovies] = React.useState([]);
   const navigate = useNavigate();
 
   React.useEffect(() => {
     (async () => {
-      try {
-        const userInfo = await AuthAPI.checkToken();
-        if (userInfo) {
-          localStorage.setItem("email", userInfo.email);
-          setLoggedIn(true);
-          setCurrentUser(userInfo);
-        }
-      } catch (err) {
-        console.log(err);
-      }
+      await getUserInfo();
     })();
-  }, [loggedIn]);
+  }, []);
 
-  React.useEffect(() => {
-      if (!loggedIn) return;
-    (async () => {
-      try {
-        const movies = await MainAPI.getFavoriteMovies();
-        if (movies.length) {
-          setFavoritMovies([...movies])
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    })();
-  },[loggedIn]);
+      React.useEffect(() => {
+      const favoriteMovies = JSON.parse(localStorage.getItem('moviesFavorite'));
+      if (favoriteMovies) setFavoriteMovies([...favoriteMovies])
+    }, []);
 
-  function getMovies(prompt="") {
-      if (!loggedIn) return;
-      setLoading(true)
-    prompt = prompt.toLowerCase();
-      setPrompt(prompt)
-    MoviesAPI.getMovies()
-      .then((newMovies) => {
-         newMovies = newMovies.filter((movie) => {
-             movie.isLike = (favoritMovies.filter(elem => elem.movieId === movie.id).length > 0)
-             if (isShortMovies)
-               return (movie.nameRU.toLowerCase().includes(prompt) || movie.nameEN.toLowerCase().includes(prompt)) && movie.duration <= 40;
-             return movie.nameRU.toLowerCase().includes(prompt) || movie.nameEN.toLowerCase().includes(prompt);
-         });
-        setMovies([...newMovies]);
-        setLoading(false);
+    async function getUserInfo() {
+    await AuthAPI.checkToken()
+      .then((userInfo) => {
+          if(userInfo){
+            setLoggedIn(true);
+            setCurrentUser(userInfo);
+          }
       })
       .catch((err) => {
-          setLoading(false);
-          console.log(err)
+        console.log(err);
       });
   }
 
-  function getFavoritMovies(prompt="") {
-      if (!loggedIn) return;
-      setLoading(true)
-      prompt = prompt.toLowerCase();
-      setPrompt(prompt)
-    MainAPI.getFavoriteMovies()
-      .then((newMovies) => {
-         newMovies = newMovies.filter((movie) => {
-             if (isShortMovies)
-               return (movie.nameRU.toLowerCase().includes(prompt) || movie.nameEN.toLowerCase().includes(prompt)) && movie.duration <= 40;
-             return movie.nameRU.toLowerCase().includes(prompt) || movie.nameEN.toLowerCase().includes(prompt);
-         });
-        setFavoritMovies([...newMovies]);
-        setLoading(false);
-      })
-      .catch((err) => {
-          setLoading(false);
-          console.log(err)
+  async function handleRegister(name, email, password) {
+    try {
+      const userInfo = await AuthAPI.signup({
+        name,
+        email,
+        password,
       });
+      if (userInfo) {
+        setStatusError(false);
+        await handleLogin(password, email)
+      }
+    } catch (err) {
+      setStatusError(true);
+      handleOpenInfoTooltip();
+      console.log(err);
+    }
   }
 
-  function handleSwitch(e){
-      e.preventDefault();
-      setSwitched(!isSwitched);
+  async function handleLogin(password, email, callback=null) {
+    try {
+      const userInfo = await AuthAPI.signin({
+        password,
+        email,
+      });
+      if (userInfo.token) {
+        localStorage.setItem("token", userInfo.token);
+        if (callback) callback({ email: "", password: "" });
+        await getUserInfo();
+      }
+    } catch (err) {
+      setStatusError(true);
+      handleOpenInfoTooltip();
+      console.log(err);
+    }
   }
 
     function handleBurgerClick() {
@@ -128,100 +109,110 @@ function App() {
   function closeInfoRegisterTooltip() {
    openInfoTooltip(false);
     if (!isError) {
-      navigate("/signin", { replace: true });
+      navigate("/movies", { replace: true });
     }
+  }
+
+    function closeProfileTooltip() {
+   openInfoTooltip(false);
   }
 
   function closeInfoTooltip() {
     openInfoTooltip(false);
   }
 
-  async function handleRegister(name, email, password) {
-    try {
-      await AuthAPI.signup({
-        name,
-        email,
-        password,
-      });
-      setStatusError(false);
-      handleOpenInfoTooltip();
-    } catch (err) {
-      setStatusError(true);
-      handleOpenInfoTooltip();
-      console.log(err);
-    }
-  }
-
-  async function handleLogin(password, email, callback) {
-    try {
-      const userInfo = await AuthAPI.signin({
-        password,
-        email,
-      });
-      if (userInfo.token) {
-        localStorage.setItem("token", userInfo.token);
-        localStorage.setItem("email", email);
-        callback({ email: "", password: "" });
-        handleLogIn();
-        setLoading(true)
-         MainAPI.getFavoriteMovies()
-          .then((newMovies) => {
-            setFavoritMovies([...newMovies]);
-            setLoading(false);
-          })
-          .catch((err) => {
-              setLoading(false);
-              console.log(err)
-          });
-          }
-    } catch (err) {
-      setStatusError(true);
-      handleOpenInfoTooltip();
-      console.log(err);
-      setLoading(false)
-    }
-  }
-
-  function handleLogIn() {
-    setLoggedIn(true);
-  }
   function logOut() {
       setLoggedIn(false);
       localStorage.clear();
+      navigate("/", { replace: true });
   }
 
-    function handleTumblerChange() {
-        setShortMovies(!isShortMovies);
+  async function getMovies() {
+          if (!JSON.parse(localStorage.getItem('movies'))) {
+            setLoading(true)
+            try{
+              const newMovies = await MoviesAPI.getMovies();
+              const favoriteMovies = await getFavoriteMovies();
+              setFavoriteMovies([...favoriteMovies])
+              if(favoriteMovies) newMovies.filter(movie=> movie.isLike = (favoriteMovies.filter(elem => elem.movieId === movie.id).length > 0))
+              localStorage.setItem('movies', JSON.stringify(newMovies))
+              setLoading(false);
+            } catch (err) {
+              setLoading(false);
+                console.log(err);
+            }
+          }
+    }
+
+    async function getFavoriteMovies() {
+          if (!JSON.parse(localStorage.getItem('moviesFavorite'))) {
+            try{
+              const newFavoriteMovies = await MainAPI.getFavoriteMovies();
+              localStorage.setItem('moviesFavorite', JSON.stringify(newFavoriteMovies))
+              setFavoriteMovies(newFavoriteMovies)
+              return newFavoriteMovies;
+            } catch (err) {
+                console.log(err);
+            }
+          }
+    }
+
+  async function handleSetFavoritMovie(movie, liked){
+      if (liked){
+        await handleLikedMovie(movie);
+        const movies = JSON.parse(localStorage.getItem('movies'));
+        const favoriteMovies = JSON.parse(localStorage.getItem('moviesFavorite'));
+        favoriteMovies.push(movie);
+        movies.filter(movie=> movie.isLike = (favoriteMovies.filter(elem => elem.id === movie.id).length > 0))
+        localStorage.removeItem('movies');
+        localStorage.removeItem('moviesFavorite');
+        localStorage.setItem('movies', JSON.stringify(movies))
+        localStorage.setItem('moviesFavorite', JSON.stringify(favoriteMovies))
+        setMovies([...movies])
+        setFavoriteMovies([...favoriteMovies])
+      } else {
+        await handleDislikedMovie(movie);
+        const movies = JSON.parse(localStorage.getItem('movies'));
+        let favoriteMovies = JSON.parse(localStorage.getItem('moviesFavorite'));
+        favoriteMovies = favoriteMovies.filter((item) => {
+          const id = item.id || item.movieId
+          const expr = id != movie.id
+          return expr
+        })
+        movies.filter(movie=> movie.isLike = !(favoriteMovies.filter(elem => elem.id === movie.id).length > 0))
+        localStorage.removeItem('movies');
+        localStorage.removeItem('moviesFavorite');
+        localStorage.setItem('movies', JSON.stringify(movies))
+        localStorage.setItem('moviesFavorite', JSON.stringify(favoriteMovies))
+        setMovies([...movies])
+        setFavoriteMovies([...favoriteMovies])
+      }
   }
 
   async function handleDislikedMovie(movie) {
       try {
-        await MainAPI.deleteMovie(movie.movieId || movie.id);
-        getFavoritMovies(promptText)
-        getMovies(promptText)
+        const movieId = movie.movieId || movie.id
+        await MainAPI.deleteMovie(movieId);
     } catch (err) {
       console.log(err);
     }
   }
 
-  async function handleLikedMovie({country, director, duration, year, description, image, trailerLink, id, imageUrl,
-                                     nameRU, nameEN}) {
+  async function handleLikedMovie(movie) {
       try {
       await MainAPI.addMovie({
-        country,
-        director,
-        duration,
-        year,
-        description,
-        image: imageUrl,
-        trailerLink,
-        thumbnail: `https://api.nomoreparties.co${image.formats.thumbnail.url}`,
-        movieId: id,
-        nameRU,
-        nameEN,
+        country: movie.country,
+        director: movie.director,
+        duration: movie.duration,
+        year: movie.year,
+        description: movie.description,
+        image: movie.imageUrl,
+        trailerLink: movie.trailerLink,
+        movieId: movie.id,
+        nameRU: movie.nameRU,
+        nameEN: movie.nameEN,
+        thumbnail: `https://api.nomoreparties.co${movie.image.formats.thumbnail.url}`,
       });
-      getFavoritMovies(promptText)
-      getMovies(promptText)
     } catch (err) {
       console.log(err);
     }
@@ -232,6 +223,7 @@ function App() {
     MainAPI.updateUserInfo(newUserData)
       .then(() => {
         setCurrentUser(newUserData);
+        handleOpenInfoTooltip()
       })
       .catch((err) => console.log(err));
   }
@@ -245,6 +237,7 @@ function App() {
             element={
               <>
                 <Header
+                    isLandingPage={true}
                     loggedIn={false}
                     onBurgerClick={handleBurgerClick}
                 />
@@ -264,13 +257,15 @@ function App() {
                             onBurgerClick={handleBurgerClick}
                         />
                         <Movies
-                            movies={movies}
                             getMovies={getMovies}
+                            movies={movies}
+                            setMovies={setMovies}
+                            favoriteMovies={favoriteMovies}
+                            setFavoriteMovies={setFavoriteMovies}
+                            handleSetFavoritMovie={handleSetFavoritMovie}
                             isLoading={isLoading}
-                            isShortMovies={isShortMovies}
-                            handleTumblerChange={handleTumblerChange}
-                            handleDislikedMovie={handleDislikedMovie}
-                            handleLikedMovie={handleLikedMovie}
+                            moviesShowed={moviesShowed}
+                            setMoviesShowed={setMoviesShowed}
                         />
                         <Footer />
                       </>
@@ -291,11 +286,11 @@ function App() {
                             onBurgerClick={handleBurgerClick}
                       />
                       <SavedMovies
-                          favoritMovies={favoritMovies}
-                          getFavoritMovies={getFavoritMovies}
-                          isShortMovies={isShortMovies}
-                          handleTumblerChange={handleTumblerChange}
-                          handleDislikedMovie={handleDislikedMovie}
+                          handleSetFavoritMovie={handleSetFavoritMovie}
+                          isLoading={isLoading}
+                          favoriteMovies={favoriteMovies}
+                          getFavoriteMovies={getFavoriteMovies}
+                          setFavoriteMovies={setFavoriteMovies}
                       />
                       <Footer />
                       </>
@@ -316,10 +311,15 @@ function App() {
                         onBurgerClick={handleBurgerClick}
                       />
                       <Profile
-                          isSwitched={isSwitched}
-                          handleSwitch={handleSwitch}
                           logOut={logOut}
                           handleUpdateUser={handleUpdateUser}
+                          handleOpenInfoTooltip={handleOpenInfoTooltip}
+                      />
+                        <InfoTooltip
+                        isOpen={isInfoTooltipOpen}
+                        isError={isError}
+                        onClose={closeProfileTooltip}
+                        successText="Данные профиля успешно изменены!"
                       />
                     </>
                   );

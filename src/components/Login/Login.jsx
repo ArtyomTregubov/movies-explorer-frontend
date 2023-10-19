@@ -1,28 +1,34 @@
 import React from 'react';
 import './Login.css';
 import logo from '../../images/logo.svg'
+import validator from "validator";
 const Login = ({onLogin}) => {
 
-    const [formValue, setFormValue] = React.useState({
-    email: "",
-    password: "",
-  });
+  const [formValue, setFormValues] = React.useState({});
+  const [errors, setErrors] = React.useState({});
+  const [isValid, setIsValid] = React.useState(false);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const handleInputChange = (e) => {
+    const target = e.target;
+    const name = target.name;
+    const value = target.value;
 
-    setFormValue({
-      ...formValue,
-      [name]: value,
-    });
+    if (name === 'email') {
+      if (!validator.isEmail(value)) {
+        target.setCustomValidity('Некорректый адрес почты');
+      } else {
+        target.setCustomValidity('');
+      }
+    }
+
+    setFormValues({ ...formValue, [name]: value });
+    setErrors({ ...errors, [name]: target.validationMessage });
+    setIsValid(target.closest('form').checkValidity());
   };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (!formValue.email || !formValue.password) {
-          return;
-        }
-        await onLogin(formValue.password, formValue.email, setFormValue);
+        await onLogin(formValue.password, formValue.email, setFormValues);
     };
 
     return (
@@ -41,33 +47,36 @@ const Login = ({onLogin}) => {
                         <label className="register__label">
                             <p className="register__placeholder">E-mail</p>
                             <input
-                                value={formValue.email}
-                                onChange={handleChange}
+                                value={formValue.email || ""}
+                                onChange={handleInputChange}
                                 className="register__input register__input-email"
                                 type="email"
                                 name="email"
                                 placeholder="ваша почта"
-                                required pattern="^[a-zA-Z0-9_.+\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-.]+$"
                             />
-                            <span className="register__input-error " id="email-error"></span>
+                            <span className="register__input-error_active" id="email-error">{errors.email}</span>
                         </label>
                         <label className="register__label">
                             <p className="register__placeholder">Пароль</p>
                             <input
-                                value={formValue.password}
-                                onChange={handleChange}
+                                value={formValue.password || ""}
+                                onChange={handleInputChange}
                                 className="register__input register__input-password"
                                 type="password"
                                 name="password"
                                 placeholder=""
                                 required
                             />
-                            <span className="register__input-error " id="password-error"></span>
+                            <span className="register__input-error_active" id="password-error">{errors.password}</span>
                         </label>
                     </fieldset>
                     <div className="register__buttons-block">
                         <p className="register__error"></p>
-                        <button className="register__submit-button" type="submit" disabled="">Войти</button>
+                        <button
+                            disabled = {isValid ? "" : "disabled"}
+                            className={isValid ? "register__submit-button" : "register__submit-button register__submit-button_disabled"}
+                            type="submit"
+                        >Войти</button>
                         <div className="register__link-block">
                             <p className="register__link register__link-text">Ещё не зарегистрированы?</p>
                             <a className="register__link" href="/signup">Зарегистироваться</a>

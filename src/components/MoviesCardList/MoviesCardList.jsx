@@ -2,12 +2,13 @@ import React from 'react';
 import MoviesCard from "../MoviesCard";
 import './MoviesCardList.css';
 
-const MoviesCardList = ({movies, isFavoritMovies = false, handleLikedMovie=null, handleDislikedMovie}) => {
+const MoviesCardList = ({movies, favoriteMovies, isFavoritMovies = false, handleSetFavoritMovie}) => {
     return (
         <section className="movies">
             {movies.map((movie) => {
-                movie.imageUrl = isFavoritMovies ? movie.image : `https://api.nomoreparties.co${movie.image.url}`
-                const id = isFavoritMovies ? movie.movieId : movie.id;
+                movie.imageUrl = `https://api.nomoreparties.co${movie.image.url}`
+                const id = movie.id;
+                movie.isLike= movie.isLike || false;
               return (
                 <MoviesCard
                     key={id}
@@ -16,10 +17,9 @@ const MoviesCardList = ({movies, isFavoritMovies = false, handleLikedMovie=null,
                     trailerLink={movie.trailerLink}
                     image={movie.imageUrl}
                     isFavoritMovies={isFavoritMovies}
-                    handleLikedMovie={handleLikedMovie}
-                    handleDislikedMovie={handleDislikedMovie}
+                    handleSetFavoritMovie={handleSetFavoritMovie}
                     movie={movie}
-                    isLike={movie.isLike}
+                    favoriteMovies={favoriteMovies}
                 />
               );
             })}
