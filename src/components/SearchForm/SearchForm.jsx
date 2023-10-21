@@ -35,7 +35,7 @@ const SearchForm = ({getMovies}) => {
       };
       const handleSubmit = async (e) => {
           e.preventDefault();
-          if (!searchText){
+          if (!searchText && location.pathname === '/movies'){
               setError("Нужно ввести ключевое слово");
               return
           }
