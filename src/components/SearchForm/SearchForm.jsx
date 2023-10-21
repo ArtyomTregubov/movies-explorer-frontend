@@ -7,6 +7,7 @@ import "./SearchForm.css"
 const SearchForm = ({getMovies}) => {
     const [searchText, setSearchText] = React.useState("");
     const [isShortMovies, setShortMovies] = React.useState(null);
+    const [error, setError] = React.useState("");
     const location = useLocation();
 
       React.useEffect(() => {
@@ -23,15 +24,22 @@ const SearchForm = ({getMovies}) => {
           if (isShortMovies) setShortMovies(isShortMovies === "true")
     },[]);
 
-    function handleTumblerChange(){
+    async function handleTumblerChange(){
       localStorage.setItem(location.pathname === '/movies' ? "isShortMovies" : "isShortMoviesFavorite", !isShortMovies)
       setShortMovies(!isShortMovies);
+      await getMovies(searchText);
     }
       const handleChange = (e) => {
+        if(e.target.value) setError("");
           setSearchText(e.target.value);
       };
       const handleSubmit = async (e) => {
-        e.preventDefault();
+          e.preventDefault();
+          if (!searchText){
+              setError("Нужно ввести ключевое слово");
+              return
+          }
+          setError("")
         if (location.pathname === '/movies') {
             localStorage.setItem("searchMovie", searchText)
         } else {
@@ -42,16 +50,16 @@ const SearchForm = ({getMovies}) => {
     return (
         <form className="search-form" noValidate="" onSubmit={handleSubmit}>
             <input
+                minLength={1}
                 value={searchText || ""}
                 onChange={handleChange}
                 type="text"
                 className="search-form__input"
                 placeholder="Фильм"
                 name="searchText"
-                style={{padding: 0}}
             />
             <FilterCheckbox isShortMovies={isShortMovies} handleTumblerChange={handleTumblerChange}/>
-            <span className="search-form__error"></span>
+            <span className="register__input-error_active">{error}</span>
             <button type="submit" className="search-form__button">Найти</button>
         </form>
     );

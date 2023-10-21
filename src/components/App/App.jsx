@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useState} from "react";
 import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
 
 import './App.css'
@@ -28,6 +28,9 @@ function App() {
   const [isInfoTooltipOpen, openInfoTooltip] = React.useState(false);
   const [currentUser, setCurrentUser] = React.useState({});
   const [isError, setErrorStatus] = React.useState(false);
+  const [isNotFound, setNotFound] = React.useState(false);
+  const [more, setMore] = React.useState(false);
+  const [firstReload, setFirstReload] = React.useState(true);
   const navigate = useNavigate();
 
   React.useEffect(() => {
@@ -37,8 +40,8 @@ function App() {
   }, []);
 
       React.useEffect(() => {
-      const favoriteMovies = JSON.parse(localStorage.getItem('moviesFavorite'));
-      if (favoriteMovies) setFavoriteMovies([...favoriteMovies])
+      const favoriteMov = JSON.parse(localStorage.getItem('moviesFavorite'));
+      if (favoriteMov) setFavoriteMovies([...favoriteMov])
     }, []);
 
     async function getUserInfo() {
@@ -50,11 +53,12 @@ function App() {
           }
       })
       .catch((err) => {
+        logOut()
         console.log(err);
       });
   }
 
-  async function handleRegister(name, email, password) {
+  async function handleRegister(name, email, password, setBlockedForm) {
     try {
       const userInfo = await AuthAPI.signup({
         name,
@@ -63,16 +67,19 @@ function App() {
       });
       if (userInfo) {
         setStatusError(false);
-        await handleLogin(password, email)
+        await handleLogin(password, email, null, setBlockedForm)
       }
+      setBlockedForm(false);
     } catch (err) {
+      setBlockedForm(false);
       setStatusError(true);
       handleOpenInfoTooltip();
       console.log(err);
+
     }
   }
 
-  async function handleLogin(password, email, callback=null) {
+  async function handleLogin(password, email, callback=null, setBlockedForm) {
     try {
       const userInfo = await AuthAPI.signin({
         password,
@@ -83,7 +90,9 @@ function App() {
         if (callback) callback({ email: "", password: "" });
         await getUserInfo();
       }
+      setBlockedForm(false)
     } catch (err) {
+      setBlockedForm(false)
       setStatusError(true);
       handleOpenInfoTooltip();
       console.log(err);
@@ -132,9 +141,9 @@ function App() {
             setLoading(true)
             try{
               const newMovies = await MoviesAPI.getMovies();
-              const favoriteMovies = await getFavoriteMovies();
-              setFavoriteMovies([...favoriteMovies])
-              if(favoriteMovies) newMovies.filter(movie=> movie.isLike = (favoriteMovies.filter(elem => elem.movieId === movie.id).length > 0))
+              const favoriteMov = await getFavoriteMovies();
+              setFavoriteMovies([...favoriteMov])
+              if(favoriteMov) newMovies?.filter(movie=> movie.isLike = (favoriteMov.filter(elem => elem.movieId === movie.id).length > 0))
               localStorage.setItem('movies', JSON.stringify(newMovies))
               setLoading(false);
             } catch (err) {
@@ -158,35 +167,19 @@ function App() {
     }
 
   async function handleSetFavoritMovie(movie, liked){
-      if (liked){
+      let favoriteMov = JSON.parse(localStorage.getItem('moviesFavorite'));
+        if (liked){
         await handleLikedMovie(movie);
-        const movies = JSON.parse(localStorage.getItem('movies'));
-        const favoriteMovies = JSON.parse(localStorage.getItem('moviesFavorite'));
-        favoriteMovies.push(movie);
-        movies.filter(movie=> movie.isLike = (favoriteMovies.filter(elem => elem.id === movie.id).length > 0))
-        localStorage.removeItem('movies');
-        localStorage.removeItem('moviesFavorite');
-        localStorage.setItem('movies', JSON.stringify(movies))
-        localStorage.setItem('moviesFavorite', JSON.stringify(favoriteMovies))
-        setMovies([...movies])
-        setFavoriteMovies([...favoriteMovies])
+        favoriteMov.push(movie);
       } else {
         await handleDislikedMovie(movie);
-        const movies = JSON.parse(localStorage.getItem('movies'));
-        let favoriteMovies = JSON.parse(localStorage.getItem('moviesFavorite'));
-        favoriteMovies = favoriteMovies.filter((item) => {
-          const id = item.id || item.movieId
-          const expr = id != movie.id
-          return expr
+        favoriteMov = favoriteMov.filter((item) => {
+          const id = item.id || item.movieId;
+          return id != movie.id;
         })
-        movies.filter(movie=> movie.isLike = !(favoriteMovies.filter(elem => elem.id === movie.id).length > 0))
-        localStorage.removeItem('movies');
-        localStorage.removeItem('moviesFavorite');
-        localStorage.setItem('movies', JSON.stringify(movies))
-        localStorage.setItem('moviesFavorite', JSON.stringify(favoriteMovies))
-        setMovies([...movies])
-        setFavoriteMovies([...favoriteMovies])
       }
+        localStorage.removeItem('moviesFavorite');
+        localStorage.setItem('moviesFavorite', JSON.stringify(favoriteMov));
   }
 
   async function handleDislikedMovie(movie) {
@@ -218,14 +211,18 @@ function App() {
     }
   }
 
-  function handleUpdateUser({ name, email }) {
+  function handleUpdateUser({ name, email }, callback) {
     const newUserData = { ...currentUser, name, email };
     MainAPI.updateUserInfo(newUserData)
       .then(() => {
         setCurrentUser(newUserData);
-        handleOpenInfoTooltip()
+        handleOpenInfoTooltip();
+          callback(false)
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+          callback(false)
+          console.log(err);
+      });
   }
 
   return (
@@ -260,12 +257,17 @@ function App() {
                             getMovies={getMovies}
                             movies={movies}
                             setMovies={setMovies}
-                            favoriteMovies={favoriteMovies}
                             setFavoriteMovies={setFavoriteMovies}
                             handleSetFavoritMovie={handleSetFavoritMovie}
                             isLoading={isLoading}
                             moviesShowed={moviesShowed}
                             setMoviesShowed={setMoviesShowed}
+                            isNotFound={isNotFound}
+                            setNotFound={setNotFound}
+                            more={more}
+                            setMore={setMore}
+                            firstReload={firstReload}
+                            setFirstReload={setFirstReload}
                         />
                         <Footer />
                       </>
@@ -313,7 +315,6 @@ function App() {
                       <Profile
                           logOut={logOut}
                           handleUpdateUser={handleUpdateUser}
-                          handleOpenInfoTooltip={handleOpenInfoTooltip}
                       />
                         <InfoTooltip
                         isOpen={isInfoTooltipOpen}

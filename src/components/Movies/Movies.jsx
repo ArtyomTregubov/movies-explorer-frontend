@@ -5,12 +5,11 @@ import MoviesCardList from "../MoviesCardList";
 import "./Movies.css"
 import {MOVIES_COUNT_ON_PAGE, SHORT_MOVIE_DURATION_40} from "../../utils/const";
 
-const Movies = ({handleSetFavoritMovie, movies, setMovies, favoriteMovies, isLoading, getMovies,
-                moviesShowed, setMoviesShowed}) => {
+const Movies = ({handleSetFavoritMovie, movies, setMovies, isLoading, getMovies,
+                moviesShowed, setMoviesShowed, isNotFound, setNotFound, more, setMore,
+                firstReload, setFirstReload}) => {
 
     const [moviesCount, setMoviesCount] = React.useState([]);
-
-    const [isNotFound, setNotFound] = React.useState(false);
 
     React.useEffect(() => {
       setMoviesCount(getMoviesCount());
@@ -21,6 +20,23 @@ const Movies = ({handleSetFavoritMovie, movies, setMovies, favoriteMovies, isLoa
         window.removeEventListener('resize', handlerResize);
       };
     }, []);
+
+      React.useEffect(() => {
+          const getLastSearch = JSON.parse(localStorage.getItem('lastSearch')) || [];
+        if (getLastSearch.length && firstReload) {
+            const movieCount = getMoviesCount()[0]
+            if (getLastSearch.length <= movieCount) {
+                setMore(false)
+            } else {
+                setMore(true);
+            }
+            const newMoviesShowed = getLastSearch.splice(0, movieCount);
+            setMoviesShowed([...newMoviesShowed]);
+            setMovies([...getLastSearch])
+            setFirstReload(false);
+        }
+
+      }, [firstReload]);
 
     function getMoviesCount() {
     let countCards;
@@ -43,8 +59,7 @@ const Movies = ({handleSetFavoritMovie, movies, setMovies, favoriteMovies, isLoa
   }
 
     async function getFilteredMovies(text){
-
-        if(!text) return;
+          setMoviesShowed([])
           setNotFound(false)
           await getMovies();
           let movies = JSON.parse(localStorage.getItem('movies'));
@@ -58,20 +73,24 @@ const Movies = ({handleSetFavoritMovie, movies, setMovies, favoriteMovies, isLoa
              }
              return movie.nameRU.toLowerCase().includes(text) || movie.nameEN.toLowerCase().includes(text);
          });
+          localStorage.setItem('lastSearch', JSON.stringify(movies))
           if (movies.length === 0) {
             setNotFound(true)
-            return;
+            setMore(false);
           }
-          if (movies.length <= moviesCount[0]){
+          else if (movies.length <= moviesCount[0]) {
             setMovies([...new Set(movies)]);
             setMoviesShowed([...new Set(movies)]);
-          return;
-          }
+            setMore(false);
+          } else {
 
-          const spliceMovies = movies;
-          const newMoviesShowed = moviesShowed.concat(spliceMovies.splice(0, moviesCount[0]));
+          const spliceMovies = [...movies];
+          const newMoviesShowed = spliceMovies.splice(0, moviesCount[0]);
           setMovies([...new Set(spliceMovies)]);
           setMoviesShowed([...new Set(newMoviesShowed)]);
+          setMore(true)
+
+          }
     }
 
     return (
@@ -84,9 +103,8 @@ const Movies = ({handleSetFavoritMovie, movies, setMovies, favoriteMovies, isLoa
             : <MoviesCardList
                     movies={moviesShowed}
                     handleSetFavoritMovie={handleSetFavoritMovie}
-                    favoriteMovies={favoriteMovies}
                 />}
-                {!isLoading && movies.length ?
+                {!isLoading && (movies.length) && more?
                     <section className="more-click">
                     <button
                       onClick={handleMore}
@@ -94,8 +112,6 @@ const Movies = ({handleSetFavoritMovie, movies, setMovies, favoriteMovies, isLoa
                       type="button"
                     >Ещё</button>
                 </section> : ""}
-
-
         </main>
     );
 };

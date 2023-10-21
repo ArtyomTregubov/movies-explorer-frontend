@@ -2,11 +2,12 @@ import React from 'react';
 import './Profile.css'
 import { CurrentUserContext } from "../../contexts/CurrentUserContext";
 import validator from "validator";
-const Profile = ({logOut, handleUpdateUser, handleOpenInfoTooltip}) => {
+const Profile = ({logOut, handleUpdateUser}) => {
 
     const [isRedacted, setRedacted] = React.useState(false);
     const [oldName, setOldName] = React.useState(false);
     const [oldEmail, setOldEmail] = React.useState(false);
+    const [isBlockedForm, setBlockedForm] = React.useState(false);
     const currentUser = React.useContext(CurrentUserContext);
 
     React.useEffect(() => {
@@ -54,11 +55,12 @@ const Profile = ({logOut, handleUpdateUser, handleOpenInfoTooltip}) => {
   };
 
     function handleSubmit(e) {
+    setBlockedForm(true);
     e.preventDefault();
     handleUpdateUser({
       name: formValue.name,
       email: formValue.email,
-    });
+    }, setBlockedForm);
   }
 
   function handleSwitch(e) {
@@ -68,6 +70,7 @@ const Profile = ({logOut, handleUpdateUser, handleOpenInfoTooltip}) => {
 
     return (
     <form
+        style={{pointerEvents: isBlockedForm ? "none" : ""}}
         onSubmit={handleSubmit}
         className="profile register"
         noValidate=""

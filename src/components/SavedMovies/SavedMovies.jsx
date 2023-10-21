@@ -6,13 +6,14 @@ import {SHORT_MOVIE_DURATION_40} from "../../utils/const";
 
 const SavedMovies = ({handleSetFavoritMovie, favoriteMovies, isLoading, getFavoriteMovies, setFavoriteMovies}) => {
   const [isNotFound, setNotFound] = React.useState(false);
+
+
   async function getFilteredMovies(text){
-        if(!text) return;
           setNotFound(false)
           await getFavoriteMovies();
           let favoriteMovies = JSON.parse(localStorage.getItem('moviesFavorite'));
           favoriteMovies = favoriteMovies.filter((movie) => {
-            const condition = localStorage.getItem("isShortMovies") === "true";
+            const condition = localStorage.getItem("isShortMoviesFavorite") === "true";
              if (condition) {
                const textRU = movie.nameRU.toLowerCase().includes(text);
                const textEN = movie.nameEN.toLowerCase().includes(text);
@@ -39,6 +40,7 @@ const SavedMovies = ({handleSetFavoritMovie, favoriteMovies, isLoading, getFavor
                     movies={favoriteMovies}
                     handleSetFavoritMovie={handleSetFavoritMovie}
                     isFavoritMovies={true}
+                    setFavoriteMovies={setFavoriteMovies}
                 />}
         </main>
     );

@@ -8,6 +8,7 @@ const Register = ({onRegister}) => {
   const [formValue, setFormValues] = React.useState({});
   const [errors, setErrors] = React.useState({});
   const [isValid, setIsValid] = React.useState(false);
+  const [isBlockedForm, setBlockedForm] = React.useState(false);
 
   const handleInputChange = (e) => {
     const target = e.target;
@@ -39,8 +40,9 @@ const Register = ({onRegister}) => {
   };
 
     const handleSubmit = async (e) => {
+        setBlockedForm(true);
         e.preventDefault();
-        await onRegister(formValue.name, formValue.email, formValue.password);
+        await onRegister(formValue.name, formValue.email, formValue.password, setBlockedForm);
     };
     return (
         <div className="register">
@@ -50,6 +52,7 @@ const Register = ({onRegister}) => {
                 </a>
                 <h2 className="register__title">Добро пожаловать!</h2>
                 <form
+                    style={{pointerEvents: isBlockedForm ? "none" : ""}}
                     onSubmit={handleSubmit}
                     className="register__form"
                     noValidate=""
