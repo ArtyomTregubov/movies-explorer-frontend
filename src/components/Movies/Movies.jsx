@@ -8,7 +8,6 @@ import {MOVIES_COUNT_ON_PAGE, SHORT_MOVIE_DURATION_40} from "../../utils/const";
 const Movies = ({handleSetFavoritMovie, movies, setMovies, isLoading, getMovies,
                 moviesShowed, setMoviesShowed, isNotFound, setNotFound, more, setMore,
                 firstReload, setFirstReload}) => {
-
     const [moviesCount, setMoviesCount] = React.useState([]);
 
     React.useEffect(() => {
@@ -51,12 +50,6 @@ const Movies = ({handleSetFavoritMovie, movies, setMovies, isLoading, getMovies,
 
     return countCards;
   }
-    function handleMore() {
-    const spliceMovies = movies;
-    const newMoviesShowed = moviesShowed.concat(spliceMovies.splice(0, moviesCount[0]));
-    setMoviesShowed(newMoviesShowed);
-    setMovies(spliceMovies);
-  }
 
     async function getFilteredMovies(text){
           setMoviesShowed([])
@@ -89,9 +82,9 @@ const Movies = ({handleSetFavoritMovie, movies, setMovies, isLoading, getMovies,
           setMovies([...new Set(spliceMovies)]);
           setMoviesShowed([...new Set(newMoviesShowed)]);
           setMore(true)
-
           }
     }
+
 
     return (
         <main className="movies-explorer">
@@ -101,17 +94,13 @@ const Movies = ({handleSetFavoritMovie, movies, setMovies, isLoading, getMovies,
             {isLoading && <Preloader />}
           {isNotFound ? <span style={{alignSelf: "center", fontSize: "18px", fontFamily: "'Inter', 'Arial', sans-serif"}}>Ничего не найдено</span>
             : <MoviesCardList
+                    allMovies={movies}
                     movies={moviesShowed}
                     handleSetFavoritMovie={handleSetFavoritMovie}
+                    isLoading={isLoading}
+                    more={more}
+                    moviesCount={moviesCount}
                 />}
-                {!isLoading && (movies.length) && more?
-                    <section className="more-click">
-                    <button
-                      onClick={handleMore}
-                      className="more-click__button"
-                      type="button"
-                    >Ещё</button>
-                </section> : ""}
         </main>
     );
 };

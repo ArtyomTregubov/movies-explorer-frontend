@@ -1,8 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import MoviesCard from "../MoviesCard";
 import './MoviesCardList.css';
 import { useLocation } from 'react-router-dom';
-const MoviesCardList = ({movies, isFavoritMovies = false, handleSetFavoritMovie, setFavoriteMovies=null}) => {
+const MoviesCardList = ({movies, allMovies, isFavoritMovies = false, handleSetFavoritMovie, setFavoriteMovies=null,
+                            isLoading, more, moviesCount}) => {
     const { pathname } = useLocation();
     let favoriteMovies = JSON.parse(localStorage.getItem('moviesFavorite'));
     const [advancedMovie, setAdvancedMovies] = React.useState(movies.map(movie=>{
@@ -38,10 +39,18 @@ const MoviesCardList = ({movies, isFavoritMovies = false, handleSetFavoritMovie,
         }
     }, [setAdvancedMovies, updateFavorite])
 
+      const onClick = React.useCallback(()=>{
+        const spliceMovies = allMovies;
+        const newMoviesShowed = advancedMovie.concat(spliceMovies.splice(0, moviesCount[1]));
+          const newMovies = newMoviesShowed.slice(-moviesCount[1])
+          setAdvancedMovies((prevValue)=>[...prevValue, ...newMovies]);
+    }, [movies, setAdvancedMovies, moviesCount])
+
     return (
+    <>
         <section className="movies">
             {advancedMovie.map((movie) => {
-
+                movie.imageUrl = `https://api.nomoreparties.co${movie.image.url}`
                 const id = movie.id;
               return (
                 <MoviesCard
@@ -59,6 +68,15 @@ const MoviesCardList = ({movies, isFavoritMovies = false, handleSetFavoritMovie,
               );
             })}
         </section>
+        {!isLoading && (movies.length) && more?
+                    <section className="more-click">
+                    <button
+                      onClick={onClick}
+                      className="more-click__button"
+                      type="button"
+                    >Ещё</button>
+                </section> : ""}
+    </>
     );
 };
 
