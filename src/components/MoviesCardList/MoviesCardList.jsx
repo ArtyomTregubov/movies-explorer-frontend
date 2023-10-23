@@ -3,7 +3,7 @@ import MoviesCard from "../MoviesCard";
 import './MoviesCardList.css';
 import { useLocation } from 'react-router-dom';
 const MoviesCardList = ({movies, allMovies, isFavoritMovies = false, handleSetFavoritMovie, setFavoriteMovies=null,
-                            isLoading, more, moviesCount}) => {
+                            isLoading, more, moviesCount, setMore}) => {
     const { pathname } = useLocation();
     let favoriteMovies = JSON.parse(localStorage.getItem('moviesFavorite'));
     const [advancedMovie, setAdvancedMovies] = React.useState(movies.map(movie=>{
@@ -44,7 +44,7 @@ const MoviesCardList = ({movies, allMovies, isFavoritMovies = false, handleSetFa
         const newMoviesShowed = advancedMovie.concat(spliceMovies.splice(0, moviesCount[1]));
           const newMovies = newMoviesShowed.slice(-moviesCount[1])
           setAdvancedMovies((prevValue)=>[...prevValue, ...newMovies]);
-    }, [movies, setAdvancedMovies, moviesCount])
+    }, [movies, setAdvancedMovies, moviesCount, setMore])
 
     return (
     <>
@@ -68,7 +68,7 @@ const MoviesCardList = ({movies, allMovies, isFavoritMovies = false, handleSetFa
               );
             })}
         </section>
-        {!isLoading && (movies.length) && more?
+        {!isLoading && (allMovies.length) && more?
                     <section className="more-click">
                     <button
                       onClick={onClick}

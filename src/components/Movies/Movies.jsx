@@ -94,6 +94,7 @@ const Movies = ({handleSetFavoritMovie, movies, setMovies, isLoading, getMovies,
             {isLoading && <Preloader />}
           {isNotFound ? <span style={{alignSelf: "center", fontSize: "18px", fontFamily: "'Inter', 'Arial', sans-serif"}}>Ничего не найдено</span>
             : <MoviesCardList
+                    setMore={setMore}
                     allMovies={movies}
                     movies={moviesShowed}
                     handleSetFavoritMovie={handleSetFavoritMovie}
