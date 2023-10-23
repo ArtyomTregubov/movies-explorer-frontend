@@ -6,7 +6,8 @@ const SHORT_MOVIE_DURATION_40 = 40;
 const MOVIES_COUNT_ON_PAGE = {
   981: [16, 4],
   681: [8, 2],
-  480: [5, 1],
+  480: [5, 2],
+  320: [5, 2],
 };
 
 export {
