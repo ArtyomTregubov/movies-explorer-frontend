@@ -57,7 +57,7 @@
 
 .menu__close-button {
     background-color: transparent;
-    background-image: url(../../images/close-button.png);
+    background-image: url(../../images/close-button.svg);
     background-size: cover;
     border: 0;
     cursor: pointer;

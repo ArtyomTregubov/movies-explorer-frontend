@@ -85,6 +85,13 @@
     padding: 0;
     text-align: end;
     width: calc(100% - 40px);
+    border-bottom: 1px solid #e8e8e8;
+}
+
+
+.profile__input:focus-visible {
+    outline: none;
+    border-bottom: solid 2px #3456f3;
 }
 
 .profile__inputs-block {
@@ -101,7 +108,6 @@
 }
 
 .profile__label {
-    border-bottom: 1px solid #e8e8e8;
     display: flex;
     justify-content: space-between;
     position: relative;

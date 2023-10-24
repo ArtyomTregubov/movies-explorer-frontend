@@ -1,25 +1,50 @@
-import React from 'react';
-
+import React, {useEffect, useState} from 'react';
+import { useLocation } from 'react-router-dom';
 import './MoviesCard.css';
-import likeRed from '../../images/likeRed.svg';
-import deleteIcon from '../../images/close.svg';
+import like from '../../images/like.svg';
+import dislike from '../../images/dislike.svg';
+import deleteIcon from '../../images/delete.svg';
+const MoviesCard = (
+    {
+        id,
+        isFavoritMovies,
+        nameRU,
+        time,
+        trailerLink,
+        image,
+        movie,
+        handleLike
+    }
+) => {
+    const { pathname } = useLocation();
+    function getDuration(mins) {
+        return `${Math.floor(mins / 60)}ч ${mins % 60}м`;
+    }
 
-const MoviesCard = ({isLike = true}) => {
+    const onClick = React.useCallback(()=>{
+        return isFavoritMovies ? handleLike(movie, false) : handleLike(movie, !movie.like)
+    }, [isFavoritMovies, handleLike, movie, movie.like])
+
     return (
-        <article className="movie">
-        <a className="movie__trailer-link" href="https://www.youtube.com/watch?v=UXcqcdYABFw" target="_blank" rel="noreferrer">
-            <img className="movie__image" src="https://api.nomoreparties.co/uploads/stones_in_exile_b2f1b8f4b7.jpeg" alt="«Роллинг Стоунз» в изгнании"/>
+        <article className="movie" id={id}>
+        <a className="movie__trailer-link" href={trailerLink} target="_blank" rel="noreferrer">
+            <img className="movie__image" src={image} alt={nameRU}/>
         </a>
         <div className="movie__info">
             <figcaption className="movie__figcaption">
-                <h2 className="movie__title">«Роллинг Стоунз» в изгнании</h2>
-                <h3 className="movie__duration">1ч 1м</h3>
+                <h2 className="movie__title">{nameRU}</h2>
+                <h3 className="movie__duration">{getDuration(time)}</h3>
             </figcaption>
-            <button className="movie__like-button" name="movie__like-button" type="button">
+            <button
+                onClick={onClick}
+                className="movie__like-button"
+                name="movie__like-button"
+                type="button"
+            >
                 <img
                     className="movie__like-image"
-                    src={isLike ? likeRed : deleteIcon}
-                    alt={isLike ? "Кнопка лайка" : "Кнопка удаления"}
+                    src={pathname !== '/saved-movies' ? movie.like ? like : dislike : deleteIcon}
+                    alt={pathname !== '/saved-movies' ? movie.like ? "Кнопка лайка" : "Кнопка удаления" : "Кнопка удаления"}
                 />
             </button>
         </div>

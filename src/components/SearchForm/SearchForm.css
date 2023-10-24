@@ -80,6 +80,18 @@
     min-height: 1.64em;
 }
 
+.register__input-error_active {
+    position: absolute;
+    color: #FF3055;
+    display: block;
+    font-family: 'Inter', 'Arial', sans-serif;
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 11px;
+    width: 396px;
+}
+
 @media (min-width: 768px) {
     .search-form__error {
         font-size: 13px;
@@ -104,6 +116,11 @@ input {
     grid-column: 1/-1;
     line-height: 1.22;
     padding-block: 15px;
+}
+
+.search-form__input:focus-visible {
+    outline: none;
+    border-bottom: solid 1px #3456f3;
 }
 
 @media (min-width: 768px) {

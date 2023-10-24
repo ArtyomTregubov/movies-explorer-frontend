@@ -65,6 +65,7 @@
 }
 
 .register__input-error_active {
+    display: block;
     position: absolute;
     color: #FF3055;
     display: block;

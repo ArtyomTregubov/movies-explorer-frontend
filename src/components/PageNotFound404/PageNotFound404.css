@@ -32,6 +32,10 @@
     color: #3456F3;
 }
 
+.notFound__link:hover {
+    cursor: pointer;
+}
+
 @media screen and (max-width: 400px) {
     .notFound__link {
         margin-top: 284px;
